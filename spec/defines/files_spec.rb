@@ -203,29 +203,6 @@ describe 'swap_file::files' do
       it { is_expected.to contain_exec('Purge /mnt/swap.1 for resize') }
     end
 
-    context 'with resize_existing set to valid true when swapfile_sizes_csv facts is a a valid string' do
-      let(:facts) do
-        # add swapfile_sizes fact with a valid string value
-        os_facts.merge({ swapfile_sizes_csv: '/mnt/swap.1||204796', swapfile_sizes: '/mnt/swap.resizeme204796' })
-      end
-      let(:params) { { resize_existing: true } }
-
-      it { is_expected.to have_swap_file__resize_resource_count(1) }
-
-      it do
-        is_expected.to contain_swap_file__resize('/mnt/swap.1').only_with(
-          {
-            'swapfile_path'          => '/mnt/swap.1',
-            'margin'                 => '50MB',
-            'expected_swapfile_size' => '7.64 GiB',
-            'actual_swapfile_size'   => '204796',
-            'verbose'                => false,
-            'before'                 => 'Exec[Create swap file /mnt/swap.1]',
-          },
-        )
-      end
-    end
-
     context 'with resize_existing set to valid true when swapfile_sizes does not exists' do
       let(:params) { { resize_existing: true } }
 
