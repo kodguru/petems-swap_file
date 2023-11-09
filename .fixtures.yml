@@ -2,9 +2,7 @@ fixtures:
   repositories:
     stdlib:
       repo: "https://github.com/puppetlabs/puppetlabs-stdlib.git"
-    augeasproviders_sysctl:
-      repo: "https://github.com/hercules-team/augeasproviders_sysctl.git"
-    augeasproviders_core:
-      repo: "https://github.com/hercules-team/augeasproviders_core.git"
+    sysctl:
+      repo: "https://github.com/kodguru/puppet-sysctl.git"
     mount_core:
       repo: "https://github.com/puppetlabs/puppetlabs-mount_core.git"

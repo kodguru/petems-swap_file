@@ -15,6 +15,6 @@ class swap_file::swappiness (
 ) {
   sysctl { 'vm.swappiness':
     ensure => 'present',
-    value  => $swappiness,
+    value  => String($swappiness),
   }
 }
