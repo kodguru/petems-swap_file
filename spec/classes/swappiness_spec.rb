@@ -7,13 +7,13 @@ describe 'swap_file::swappiness' do
 
       it { is_expected.to compile.with_all_deps }
       it { is_expected.to contain_class('swap_file::swappiness') }
-      it { is_expected.to have_resource_count(1) }
+      it { is_expected.to have_sysctl_resource_count(1) }
 
       it do
         is_expected.to contain_sysctl('vm.swappiness').with(
           {
             'ensure' => 'present',
-            'value'  => 60,
+            'value'  => '60',
           },
         )
       end
@@ -36,7 +36,7 @@ describe 'swap_file::swappiness' do
     context 'with swappiness set to valid 3' do
       let(:params) { { swappiness: 3 } }
 
-      it { is_expected.to contain_sysctl('vm.swappiness').with_value(3) }
+      it { is_expected.to contain_sysctl('vm.swappiness').with_value('3') }
     end
 
     describe 'variable type and content validations' do

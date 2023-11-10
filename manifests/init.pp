@@ -35,23 +35,12 @@
 # @param files
 #   Hash of swap files to ensure with swap_file::files
 #
-# @param files_hiera_merge
-#   Boolean to merge all found instances of swap_file::files in Hiera.
-#   This can be used to specify swap files at different levels an have
-#   them all included in the catalog.
-#
 # @author - Peter Souter
 #
 class swap_file (
-  Hash    $files             = {},
-  Boolean $files_hiera_merge = false,
+  Hash $files = {},
 ) {
-  case $files_hiera_merge {
-    true:    { $files_real = hiera_hash('swap_file::files', {}) }
-    default: { $files_real = $files }
-  }
-
-  if $files_real {
-    create_resources('swap_file::files', $files_real)
+  if $files {
+    create_resources('swap_file::files', $files)
   }
 }

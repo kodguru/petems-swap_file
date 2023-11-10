@@ -121,8 +121,6 @@ This hiera config will respectively:
 * create a file `/tmp/swapfile.fallocate` using /usr/bin/fallocate with the default size taken from the `$::memorysize` fact and creating a `mount` for it.
 * deactivates the swapfile `/tmp/swapfile.old`, deletes it and removes the `mount`.
 
-Set `$files_hiera_merge` to `true` to merge all found instances of `swap_file::files` in Hiera. This is useful for specifying swap files at different levels of the hierachy and having them all included in the catalog.
-
 ##Upgrading from 1.0.1 Release
 
 Previously you would create swapfiles with the `swap_file` class:

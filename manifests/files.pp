@@ -60,26 +60,14 @@ define swap_file::files (
 
   if $ensure == 'present' {
     # Check for resizing the swap file
-    if $resize_existing and $facts['swapfile_sizes'] {
-      # use $swapfile_sizes for new or $swapfile_sizes_csv as fallback for old Puppet clients
-      $existing_swapfile_size = swap_file_size_from_csv($swapfile,$facts['swapfile_sizes_csv'])
-      if $swapfile in $facts['swapfile_sizes'] {
-        $actual_swapfile_size = $facts['swapfile_sizes'][$swapfile]
-      } elsif $existing_swapfile_size {
-        $actual_swapfile_size = $existing_swapfile_size
-      } else {
-        $actual_swapfile_size = undef
-      }
-
-      if $actual_swapfile_size {
-        swap_file::resize { $swapfile:
-          swapfile_path          => $swapfile,
-          margin                 => $resize_margin,
-          expected_swapfile_size => $swapfilesize,
-          actual_swapfile_size   => $actual_swapfile_size,
-          verbose                => $resize_verbose,
-          before                 => Exec["Create swap file ${swapfile}"],
-        }
+    if $resize_existing and $swapfile in $facts['swapfile_sizes'] {
+      swap_file::resize { $swapfile:
+        swapfile_path          => $swapfile,
+        margin                 => $resize_margin,
+        expected_swapfile_size => $swapfilesize,
+        actual_swapfile_size   => $facts['swapfile_sizes'][$swapfile],
+        verbose                => $resize_verbose,
+        before                 => Exec["Create swap file ${swapfile}"],
       }
     }
 
